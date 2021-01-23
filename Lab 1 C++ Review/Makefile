@@ -1,9 +1,13 @@
 CFLAGS=-std=c++11 -g
-debug:
-	g++ $(CFLAGS) main.cpp TodoList.h -o debug
 
 todo:
 	g++ main.cpp TodoList.h -o TODO
+
+debug:
+	g++ $(CFLAGS) main.cpp TodoList.h -o debug
+
+clean-debug:
+	rm -f debug
 
 valgrind:
 	g++ -g main.cpp TodoList.h -o TODO

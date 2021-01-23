@@ -33,10 +33,16 @@ public:
             // reading each line: https://stackoverflow.com/a/55029247/1067590
             // each line is either a day or a task
             while (getline(todoFile, dayOrTask)) {
+                if (dayOrTask.empty()) {
+                    // we may be on a blank line
+                    continue;
+                }
+                // if it is a day, add it as a key to `theList`
                 if (weekdays.find(dayOrTask) != weekdays.end()) {
                     day = dayOrTask;
                     theList[day] = vector<string>();
                 }
+                // if it is a task, add it to the current day
                 else {
                     theList[day].push_back(dayOrTask);
                 }
@@ -66,6 +72,10 @@ public:
         // go through each key in the list
         auto iter = theList.begin();
         while (iter != theList.end()) {
+            if (iter->first.empty()) {
+                // we may be on a file line that is empty
+                break;
+            }
             // a place to store the not-removed items
             vector<string> newVec;
             tasks = iter->second;
@@ -74,7 +84,9 @@ public:
             for (size_t i = 0; i < tasks.size(); i++) {
                 // it tried to use something like tasks.erase(i), but `erase` was not available
                 if (taskToRemove == tasks[i]) {
+                    cout << "task '" << taskToRemove << "' removed from " << iter->first << endl;
                     success = 1;
+                    // we don't need to look through this day anymore (assuming there's only one task with the same name per day)
                     continue;
                 }
 
