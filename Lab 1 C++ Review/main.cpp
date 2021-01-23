@@ -1,20 +1,28 @@
 #include <iostream>
 #include "TodoList.h"
 
-int main(int argc, char **argv) {
+int main(int argc, char *argv[]) {
     TodoList list{};
 
     if (argc < 2) {
         cout << "Usage: "<<argv[0]<<" <operation>"<<endl;
     }
-
-    switch (argv[1]) {
-        case 'printList':
-            list.printTodoList()
-
+    else if (string(argv[1]) == "printList") {
+        // e.g., ./TODO printList
+        list.printTodoList();
     }
-
-    // what action is requested
+    else if (string(argv[1]) == "add") {
+        // e.g., ./TODO add Sunday “Take a nap”
+        list.add(argv[2], argv[3]);
+    }
+    else if (string(argv[1]) == "remove") {
+        // e.g., ./TODO remove “Take a nap”
+        list.remove(argv[2]);
+    }
+    else if (string(argv[1]) == "printDay") {
+        // e.g., ./TODO printDay Sunday
+        list.printDaysTasks(argv[2]);
+    }
 
     return 0;
 }
