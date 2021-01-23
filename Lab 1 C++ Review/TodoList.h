@@ -6,25 +6,23 @@
 #include <vector>
 #include <fstream>
 #include <iostream>
-#include <sstream>
 
 #include "TodoListInterface.h"
 
 using namespace std;
 
 class TodoList : public TodoListInterface {
-    // keys are strings and values are vectors
 private:
+    // keys are strings and values are vectors
     map<string, vector<string>> theList;
     set<string> weekdays = {"Sunday","Monday","Tuesday", "Wednesday","Thursday","Friday","Saturday"};
-    ifstream todoFile;
     string fileName;
 public:
     // constructor
     TodoList() {
         // read file
         fileName = "TODOList.txt";
-        todoFile.open(fileName);
+        ifstream todoFile(fileName);
         if (!todoFile.is_open()) {
             cout << "Could not open file" << endl;
         } else {
@@ -43,26 +41,40 @@ public:
                     theList[day].push_back(dayOrTask);
                 }
             }
-            // TODO: maybe move this to destructor
-            todoFile.close();
         }
+        todoFile.close();
     }
 
+    /**
+     * Insert an item in the vector that belongs to `theList[day]`
+     * @param day  One of Sunday, Monday, etc.
+     * @param task  The name of the task to be added to `day`
+     */
     void add(string day, string task) {
         theList[day].push_back(task);
     }
 
+    /**
+     * Search for any instance of `taskToRemove` and remove it
+     * @param taskToRemove  any task name
+     * @return 1  if at least one item was removed. O otherwise.
+     */
     int remove(string taskToRemove) {
-        auto it = theList.begin();
+        int success = 0;
+        vector<string> tasks;
+
         // go through each key in the list
-        while (it != theList.end()) {
+        auto iter = theList.begin();
+        while (iter != theList.end()) {
+            // a place to store the not-removed items
             vector<string> newVec;
-            string day = it->first;
-            vector<string> tasks = it->second;
+            tasks = iter->second;
 
             // for each task, see if it is the one marked for removal
             for (size_t i = 0; i < tasks.size(); i++) {
+                // it tried to use something like tasks.erase(i), but `erase` was not available
                 if (taskToRemove == tasks[i]) {
+                    success = 1;
                     continue;
                 }
 
@@ -71,33 +83,41 @@ public:
             }
             if (newVec.empty()) {
                 // get rid of this day if it has no tasks
-                theList.erase(it);
+                theList.erase(iter);
             }
             else {
                 // otherwise, set this day's tasks to the new list
-                it->second = newVec;
+                iter->second = newVec;
             }
-            it++;
+            iter++;
         }
+        return success;
     }
 
+    /**
+     * Open the file and print to std out
+     */
     void printTodoList() {
-        todoFile.open(fileName);
+        ifstream todoFile(fileName);
         if (!todoFile.is_open()) {
             cout << "Could not open file" << endl;
         } else {
-            cout << todoFile.rdbuf();
+            cout << todoFile.rdbuf() << endl;
         }
+        todoFile.close();
     }
 
+    /**
+     * Print the tasks related to `day`
+     * @param day  One of Sunday, Monday, etc.
+     */
     void printDaysTasks(string day) {
         if (theList.find(day) == theList.end()) {
             cout << day << " not found\n";
         }
         else {
             cout << "Tasks for " << day << ":" << endl;
-            // TODO: only prints "Sunday"
-            for (string task : theList.at(day)) {
+            for (const string& task : theList.at(day)) {
                 cout << task << endl;
             }
         }
@@ -107,16 +127,15 @@ public:
     ~TodoList() {
         ofstream outHandle(fileName);
         // write `theList` to file
-        // for each item in theList, print the key then print each item in the value
+        // for each item in theList, write the key then write each item in the value
         for (const auto &element : theList) {
             outHandle << element.first << endl;
             for (const string& task : element.second) {
                 outHandle << task << endl;
             }
         }
-
-
-//        delete[] theList;
+        outHandle.close();
+        theList.clear();
     }
 };
 #endif

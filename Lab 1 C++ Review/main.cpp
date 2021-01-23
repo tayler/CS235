@@ -23,6 +23,9 @@ int main(int argc, char *argv[]) {
         // e.g., ./TODO printDay Sunday
         list.printDaysTasks(argv[2]);
     }
+    else {
+        cerr << "Unknown argument. Try " << argv[0] << " <printList | add day task | remove task | printDay day>" << endl;
+    }
 
     return 0;
 }
