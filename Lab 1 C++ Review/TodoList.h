@@ -24,7 +24,7 @@ public:
         fileName = "TODOList.txt";
         ifstream todoFile(fileName);
         if (!todoFile.is_open()) {
-            cout << "Could not open file" << endl;
+            cout << "Could not open file. Creating..." << endl;
         } else {
             // each line contains one day and its tasks
             // iterate through each line, then through each word in the line
@@ -58,6 +58,7 @@ public:
      */
     void add(string day, string task) {
         theList[day].push_back(task);
+        cout << "Added " << task << " to " << day << endl;
     }
 
     /**
