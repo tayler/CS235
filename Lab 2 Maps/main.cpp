@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
             string nopunct = "";
             for(auto &c : token) { // Remove Punctuation      
                 if (isalpha(c)) {
-                    nopunct +=c;       
+                    nopunct +=c;
                 }
             }
             tokens.push_back(nopunct);
@@ -118,7 +118,7 @@ int main(int argc, char *argv[]) {
 //    }
 
     // new sermon by picking words known to follow other words in the text
-    srand(time(NULL)); // this line initializes the random number generated
+    srand(time(nullptr)); // this line initializes the random number generated
     // so you dont get the same thing every time
 //    string state3 = "";
 //    for (int i = 0; i < 100; i++) {
@@ -131,10 +131,12 @@ int main(int argc, char *argv[]) {
     // Part 6: use phrases as keys instead of single words
     map<list<string>, vector<string>> wordMap3;
     list<string> state4;
-    int M = 3;
+    int M = 2; // M is how many words in a row it uses as the map key
     for (int i = 0; i < M; i++) {
         state4.push_back("");
     }
+
+
 
     for (auto & token : tokens) {
         wordMap3[state4].push_back(token);
@@ -142,17 +144,38 @@ int main(int argc, char *argv[]) {
         state4.pop_front();
     }
 
-    // TODO: find new text. Add periods if the new word starts with upper case
     // generate new sermon
-    state4.clear();
-    for (int i = 0; i < M; i++) {
-        state4.push_back("");
-    }
-    for (int i = 0; i < 100; i++) {
-        int ind = rand() % wordMap3[state4].size();
-        cout << wordMap3[state4][ind]<<" ";
-        state4.push_back(wordMap3[state4][ind]);
-        state4.pop_front();
+//    state4.clear();
+//    for (int i = 0; i < M; i++) {
+//        state4.push_back("");
+//    }
+//    for (int i = 0; i < 100; i++) {
+//        int ind = rand() % wordMap3[state4].size();
+//        cout << wordMap3[state4][ind]<<" ";
+//        state4.push_back(wordMap3[state4][ind]);
+//        state4.pop_front();
+//    }
+
+    // get a random key for wordMap3. Otherwise, it always starts with one of 4 or 5 keys
+//    auto wordMap3It = wordMap3.begin();
+//    std::advance(wordMap3It, rand() % wordMap3.size());
+//    list<string> random_key = wordMap3It->first;
+//    state4 = random_key;
+
+
+    // Part 7: Do something creative - haiku
+    // how many words per line
+    vector<int> wordCountPerLine({3,4,3});
+    // for each line in the poem
+    for (int countIdx = 0; countIdx < wordCountPerLine.size(); countIdx++) {
+        // print the number of lines specified in
+        for (int i = 0; i < wordCountPerLine[countIdx]; i++) {
+            int ind = rand() % wordMap3[state4].size();
+            cout << wordMap3[state4][ind]<<" ";
+            state4.push_back(wordMap3[state4][ind]);
+            state4.pop_front();
+        }
+        cout << endl;
     }
 
     return 0;
