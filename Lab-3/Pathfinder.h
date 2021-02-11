@@ -44,9 +44,9 @@ public:
     }
 
     void createRandomMaze() {
-        for (int level = 0; i < LEVEL_SIZE; i++) {
-            for (int row = 0; j < ROW_SIZE; j++) {
-                for (int column = 0; k < COL_SIZE; k++) {
+        for (int level = 0; level < LEVEL_SIZE; level++) {
+            for (int row = 0; row < ROW_SIZE; row++) {
+                for (int column = 0; column < COL_SIZE; column++) {
                     maze_grid[row][column][level] = rand() % 2;
                 }
             }
