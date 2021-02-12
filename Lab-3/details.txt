@@ -1,0 +1,32 @@
+out_file1.txt
+out_file2.txt
+1 1 0 1 0						      |	1 1 1 1 1
+0 0 0 1 0						      |	1 1 1 1 1
+1 1 1 1 0						      |	1 1 1 1 1
+1 0 0 0 0						      |	1 1 1 1 1
+1 0 0 0 0						      |	1 1 1 1 1
+0 1 0 1 0						      |	1 1 1 1 1
+0 0 0 0 0						      |	1 1 1 1 1
+0 0 0 0 0						      |	1 1 1 1 1
+0 0 0 0 0						      |	1 1 1 1 1
+1 0 0 0 0						      |	1 1 1 1 1
+0 1 0 1 0						      |	1 1 1 1 1
+0 1 0 0 0						      |	1 1 1 1 1
+0 1 1 1 0						      |	1 1 1 1 1
+0 0 0 0 0						      |	1 1 1 1 1
+1 0 0 0 0						      |	1 1 1 1 1
+0 0 0 1 0						      |	1 1 1 1 1
+0 0 0 0 0						      |	1 1 1 1 1
+0 0 0 1 0						      |	1 1 1 1 1
+0 0 0 0 0						      |	1 1 1 1 1
+1 0 0 0 0						      |	1 1 1 1 1
+0 0 0 1 0						      |	1 1 1 1 1
+0 0 0 1 0						      |	1 1 1 1 1
+0 0 0 1 0						      |	1 1 1 1 1
+0 0 0 0 0						      |	1 1 1 1 1
+importMaze Mazes/Invalid4.txt False			      |	importMaze Mazes/Invalid4.txt True
+out_file3.txt
+solveMaze VALID solution given				      |	solveMaze Maze has no valid solution
+solveMaze VALID solution given				      |	solveMaze Maze has no valid solution
+solveMaze VALID solution given				      |	solveMaze Maze has no valid solution
+out_file4.txt
