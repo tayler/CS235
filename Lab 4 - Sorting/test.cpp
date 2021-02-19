@@ -1,7 +1,7 @@
 #include "QS.h"
 
 int main(int argc, char *argv[]) {
-    QSLib qs{};
+    QS qs{};
 
 //    qs.createArray(5);
 //    qs.addToArray(11);

@@ -5,7 +5,7 @@
 
 using namespace std;
 
-class QSLib : public QSInterface {
+class QS : public QSInterface {
 private:
     int* arr;
     int _capacity;
@@ -13,13 +13,13 @@ private:
     int _nextPosition;
 
 public:
-    QSLib() {
+    QS() {
         _capacity = 0;
         _nextPosition = 0;
     }
 
     int medianOfThree(int left, int right) {
-        if (left < 0 || right > _nextPosition || left > right) {
+        if (left < 0 || right >= _nextPosition || left >= right) {
             return -1;
         }
         int middle = (left + right)/2;
@@ -44,6 +44,10 @@ public:
     }
 
     int partition(int left, int right, int pivotIndex) {
+        if (arr == nullptr || left < 0 || right >= _nextPosition || left >= right || pivotIndex < left || pivotIndex > right) {
+            return -1;
+        }
+
         int tmp = arr[pivotIndex];
         int up = left + 1;
         int down = right;
@@ -67,14 +71,6 @@ public:
 
         return down;
     }
-//
-//    void sortAll(int first, int last) {
-//        if((last - first) < 1) return;
-//        int pivot = medianOfThree(first, last);
-//        pivot = partition(first, last, pivot);
-//        this->sortAll(first, pivot - 1);
-//        this->sortAll(pivot + 1, last);
-//   }
 
     void sortAll() {
         this->quicksort(0, this->getSize() - 1);
@@ -135,7 +131,7 @@ public:
     }
 
     // destructor
-    ~QSLib() {
+    ~QS() {
         // The key word "delete" is used to release space that was allocated with "new"
         delete [] arr;
         arr = nullptr;
