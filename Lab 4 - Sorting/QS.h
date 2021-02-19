@@ -8,14 +8,15 @@ using namespace std;
 class QSLib : public QSInterface {
 private:
     int* arr;
-    int _capacity = 0;
+    int _capacity;
     // _nextPosition is the index of the final item in the array
-    int _nextPosition = 0;
+    int _nextPosition;
 
 public:
-    QSLib() {}
-
-    void sortAll() {}
+    QSLib() {
+        _capacity = 0;
+        _nextPosition = 0;
+    }
 
     int medianOfThree(int left, int right) {
         if (left < 0 || right > _nextPosition || left > right) {
@@ -43,7 +44,48 @@ public:
     }
 
     int partition(int left, int right, int pivotIndex) {
-        return 0;
+        int tmp = arr[pivotIndex];
+        int up = left + 1;
+        int down = right;
+
+        arr[pivotIndex] = arr[left];
+        arr[left] = tmp;
+
+        do {
+            while ((arr[up]<= arr[left]) && (up < right)) { up++; }
+            while ((arr[down] > arr[left]) && (down > left)) { down--; }
+            if (up < down) {
+                tmp=arr[up];
+                arr[up]= arr[down];
+                arr[down]=tmp;
+            }
+        } while (up < down);
+
+        tmp = arr[left];
+        arr[left] = arr[down];
+        arr[down] = tmp;
+
+        return down;
+    }
+//
+//    void sortAll(int first, int last) {
+//        if((last - first) < 1) return;
+//        int pivot = medianOfThree(first, last);
+//        pivot = partition(first, last, pivot);
+//        this->sortAll(first, pivot - 1);
+//        this->sortAll(pivot + 1, last);
+//   }
+
+    void sortAll() {
+        this->quicksort(0, this->getSize() - 1);
+    }
+
+    void quicksort(int first, int last) {
+        if((last - first) < 1) return;
+        int pivot = medianOfThree(first, last);
+        pivot = partition(first, last, pivot);
+        this->quicksort(first, pivot - 1);
+        this->quicksort(pivot + 1, last);
     }
 
     string getArray() const {
@@ -65,10 +107,9 @@ public:
     bool createArray(int capacity) {
         // If a previous array had been allocated, delete the previous array.
         if (_nextPosition > 0) {
-            delete[] arr;
+            this->clear();
         }
         _capacity = capacity;
-        _nextPosition = 0;
         arr = new int[capacity];
 
         return capacity > -1;
@@ -85,6 +126,9 @@ public:
     }
 
     void clear() {
+        // deallocates the array
+        delete [] arr;
+        // reset `arr` to null pointer. You should always set the pointer to zero after delete has been called because the data the pointer references will be invalid after the delete call.
         arr = nullptr;
         _capacity = 0;
         _nextPosition = 0;
@@ -92,7 +136,9 @@ public:
 
     // destructor
     ~QSLib() {
-        delete[] arr;
+        // The key word "delete" is used to release space that was allocated with "new"
+        delete [] arr;
+        arr = nullptr;
     }
 };
 

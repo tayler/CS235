@@ -5,3 +5,6 @@ test:
 	g++ -std=c++11 test.cpp QS.h -o test
 clean-test:
 	rm -f test
+
+debug:
+	g++ -std=c++11 -g test.cpp QS.h -o test

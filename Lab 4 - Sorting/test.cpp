@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
 //    cout << "size3: " << size3 << " ; arr3: " << arr3 << endl;
 //
 //    qs.clear();
-
+//
     qs.createArray(9);
     qs.addToArray(44);
     qs.addToArray(75);
@@ -32,18 +32,28 @@ int main(int argc, char *argv[]) {
     qs.addToArray(64);
     qs.addToArray(77);
     qs.addToArray(33);
-//    qs.addToArray(33);
     int size1 = qs.getSize();
     string arr1 = qs.getArray();
+//
+//    cout << "size1: " << size1 << " ; arr1: " << arr1 << endl;
+//
+//    int median = qs.medianOfThree(0, size1 - 1);
+//    int sizeAfterSort = qs.getSize();
+//    string arrAfterSort = qs.getArray();
+//
+//    cout << "median: " << median << "; sizeAfterSort: " << sizeAfterSort << " ; arrAfterSort: " << arrAfterSort << endl;
+//
+////    qs.clear();
 
-    cout << "size1: " << size1 << " ; arr1: " << arr1 << endl;
+    cout << "before sort: " << arr1 << endl;
+    qs.sortAll();
 
-    int median = qs.medianOfThree(0, size1 - 1);
-    int sizeAfterSort = qs.getSize();
-    string arrAfterSort = qs.getArray();
+    string muchSorted = qs.getArray();
+    cout << "sorted: " << muchSorted << endl;
 
-    cout << "median: " << median << "; sizeAfterSort: " << sizeAfterSort << " ; arrAfterSort: " << arrAfterSort << endl;
-
-
+//    qs.createArray(2);
+//    qs.addToArray(11);
+//    qs.addToArray(22);
+//    qs.sortAll();
     return 0;
 }
